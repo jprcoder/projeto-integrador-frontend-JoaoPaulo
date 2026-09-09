@@ -1,15 +1,16 @@
 
 :root {
-	--navy: #102a43;
-	--blue: #1f6fbb;
-	--sky: #eaf4fb;
-	--gold: #d6a63c;
-	--gold-light: #f4d98b;
-	--ink: #18324a;
-	--muted: #5d7184;
+	--navy: #101820;
+	--blue: #176b87;
+	--sky: #e8f0ed;
+	--gold: #e2f04f;
+	--gold-light: #f4f7a2;
+	--ink: #18252b;
+	--muted: #607078;
+	--coral: #ff765c;
 	--white: #ffffff;
-	--line: #d9e4ec;
-	--shadow: 0 14px 35px rgba(16, 42, 67, 0.12);
+	--line: #c9d6d3;
+	--shadow: 10px 10px 0 rgba(16, 24, 32, 0.11);
 }
 
 * {
@@ -23,7 +24,9 @@ html {
 body {
 	margin: 0;
 	color: var(--ink);
-	background: #f7fafc;
+	background-color: #f7f8f3;
+	background-image: radial-gradient(#d6dfda 0.7px, transparent 0.7px);
+	background-size: 14px 14px;
 	font-family: Georgia, "Times New Roman", serif;
 	line-height: 1.5;
 }
@@ -33,10 +36,12 @@ header {
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	padding: 1rem clamp(1rem, 5vw, 5rem);
+	position: relative;
+	z-index: 2;
+	padding: 0.7rem clamp(1rem, 5vw, 5rem);
 	color: var(--white);
 	background: var(--navy);
-	border-bottom: 4px solid var(--gold);
+	border-bottom: 7px solid var(--gold);
 }
 
 .logo {
@@ -46,7 +51,7 @@ header {
 }
 
 .logo svg {
-	width: 150px;
+	width: 135px;
 	height: auto;
 }
 
@@ -94,16 +99,35 @@ main {
 }
 
 .banner {
+	position: relative;
+	isolation: isolate;
+	min-height: 430px;
 	padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 9vw, 9rem);
 	color: var(--white);
-	background: linear-gradient(125deg, var(--navy) 0%, #18568e 63%, var(--blue) 100%);
+	background: linear-gradient(112deg, var(--navy) 0 57%, var(--blue) 57% 100%);
 	border-bottom: 1px solid rgba(244, 217, 139, 0.35);
+}
+
+.banner::after {
+	position: absolute;
+	z-index: -1;
+	right: 7vw;
+	bottom: 2rem;
+	color: rgba(226, 240, 79, 0.22);
+	content: "JS / 26";
+	font-family: Arial, sans-serif;
+	font-size: clamp(4rem, 12vw, 11rem);
+	font-weight: 900;
+	letter-spacing: 0.08em;
+	line-height: 0.8;
+	transform: rotate(-8deg);
 }
 
 .banner h2 {
 	max-width: 650px;
 	margin: 0;
-	color: var(--gold-light);
+	color: var(--gold);
+	font-style: italic;
 	font-size: clamp(2.5rem, 6vw, 5rem);
 	line-height: 0.98;
 }
@@ -118,10 +142,11 @@ main {
 button {
 	display: inline-block;
 	border: 0;
-	border-radius: 4px;
+	border-radius: 0;
 	padding: 0.8rem 1.2rem;
 	color: var(--navy);
 	background: var(--gold);
+	box-shadow: 5px 5px 0 var(--coral);
 	font: inherit;
 	font-weight: bold;
 	text-decoration: none;
@@ -132,7 +157,8 @@ button {
 .botao:hover,
 button:hover {
 	background: var(--gold-light);
-	transform: translateY(-2px);
+	transform: translate(2px, 2px);
+	box-shadow: 2px 2px 0 var(--coral);
 }
 
 #produtos,
@@ -142,7 +168,7 @@ button:hover {
 .newsletter {
 	max-width: 1180px;
 	margin: auto;
-	padding: 4rem clamp(1rem, 4vw, 2rem);
+	padding: 5.5rem clamp(1rem, 4vw, 2rem);
 }
 
 section > h2,
@@ -163,18 +189,34 @@ section > h2 + p,
 .categorias-grid {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 1.25rem;
+	gap: 1.7rem;
 	margin-top: 2rem;
 }
 
 .produto {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	padding: 1rem;
 	background: var(--white);
 	border: 1px solid var(--line);
-	border-top: 4px solid var(--gold);
+	border-top: 7px solid var(--navy);
 	box-shadow: var(--shadow);
+	transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.produto:nth-child(even) {
+	transform: translateY(2.2rem);
+	border-top-color: var(--coral);
+}
+
+.produto:hover {
+	transform: translate(-3px, -5px);
+	box-shadow: 14px 15px 0 rgba(16, 24, 32, 0.12);
+}
+
+.produto:nth-child(even):hover {
+	transform: translate(-3px, calc(2.2rem - 5px));
 }
 
 .produto img {
@@ -182,6 +224,14 @@ section > h2 + p,
 	aspect-ratio: 1 / 1.1;
 	object-fit: cover;
 	background: var(--sky);
+	filter: saturate(0.8) contrast(1.05);
+}
+
+.produto-sem-imagem {
+	justify-content: center;
+	min-height: 360px;
+	padding-top: 2rem;
+	background: linear-gradient(145deg, var(--white), var(--sky));
 }
 
 .produto h3 {
@@ -210,6 +260,7 @@ section > h2 + p,
 	max-width: none;
 	color: var(--white);
 	background: var(--navy);
+	border-top: 7px solid var(--coral);
 }
 
 .categorias h2 {
@@ -228,8 +279,9 @@ section > h2 + p,
 .categorias-grid article {
 	min-height: 170px;
 	padding: 1.5rem;
-	background: linear-gradient(145deg, #1d5d94, #16466f);
-	border-left: 5px solid var(--gold);
+	background: var(--blue);
+	border-left: 8px solid var(--gold);
+	box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.18);
 }
 
 .categorias-grid h3 {
@@ -250,7 +302,7 @@ canvas {
 	width: min(100%, 600px);
 	height: auto;
 	margin: 1.5rem auto 0;
-	background: var(--white);
+	background: rgba(255, 255, 255, 0.9);
 	border: 1px solid var(--line);
 	box-shadow: var(--shadow);
 }
@@ -258,7 +310,8 @@ canvas {
 .beneficios {
 	margin-bottom: 2rem;
 	background: var(--sky);
-	border-left: 5px solid var(--gold);
+	border-left: 8px solid var(--coral);
+	box-shadow: var(--shadow);
 }
 
 .beneficios ul {
@@ -297,8 +350,8 @@ footer {
 	padding: 3rem 1rem;
 	color: var(--white);
 	text-align: center;
-	background: #0b2034;
-	border-top: 4px solid var(--gold);
+	background: var(--navy);
+	border-top: 7px solid var(--gold);
 }
 
 footer h2,
@@ -327,6 +380,10 @@ footer address {
 
 	.produtos {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.produto:nth-child(even) {
+		transform: none;
 	}
 
 	.beneficios ul {

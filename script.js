@@ -5,6 +5,19 @@
 // Localiza o elemento Canvas no HTML
 const canvas = document.getElementById("grafico-produtos");
 
+function ajustarCanvas() {
+    const escala = window.devicePixelRatio || 1;
+    const largura = canvas.clientWidth || 600;
+    const altura = largura * (350 / 600);
+    const fator = largura / 600;
+
+    canvas.width = Math.round(largura * escala);
+    canvas.height = Math.round(altura * escala);
+    ctx.setTransform(escala * fator, 0, 0, escala * fator, 0, 0);
+    canvas.larguraVisual = largura;
+    canvas.alturaVisual = altura;
+}
+
 // Obtém o contexto 2D para realizar os desenhos
 const ctx = canvas.getContext("2d");
 
@@ -181,4 +194,11 @@ function desenharGrafico() {
 // INICIA O GRÁFICO
 // ==========================================
 
+ajustarCanvas();
 desenharGrafico();
+
+window.addEventListener("resize", () => {
+    ajustarCanvas();
+    animacao = 1;
+    desenharGrafico();
+});
